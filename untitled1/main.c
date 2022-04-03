@@ -57,13 +57,6 @@ void showMenu(Libro *libros){
     do {
         showTitles();
         scanf("%d", &option);
-        //esto hace que el menu vuelva a mostrarse hasta que me ingrese una opcion valida
-        while (option <= 0 || option >= 5) {
-            printf("Opcion Invalida! \n");
-            showTitles();
-            scanf("%d", &option);
-        }
-
         switch (option) {
             case 1:
                 buscarPersona(libros);
