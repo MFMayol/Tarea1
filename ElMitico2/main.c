@@ -7,13 +7,13 @@
 #define MAXCHAR 1010
 enum OPTIONS {BUSCAR = 1, ELIMINAR = 2, MOSTRAR = 3, SALIR = 4};
 
-void mostrarPersonas(Persona *personas);
-void buscarPersona(Persona *pPersonas);
-void eliminarPersona(Persona *personas);
-void salir(Persona *pPersonas);
-void showMenu(Persona *personas);
+void mostrarPersonas(Libro *libros);
+void buscarPersona(Libro *lLibros);
+void eliminarPersona(Libro *libros);
+void salir(Libro *lLibros);
+void showMenu(Libro *libros);
 
-void salir(Persona *pPersonas);
+void salir(Libro *lLibros);
 
 char *toLowerCase(char *name);
 
@@ -22,13 +22,13 @@ int main(int argc, char *argv[] ){
     //Abro el archivo
     FILE *fp = openFile(argv[1]);
     //Defino la estructura que usare para guardar los contenidos en memoria
-    Persona *personas;
+    Libro *libros;
     //paso el contenido del file a un array de personas
-    personas = getPersonas(fp);
+    libros = getLibros(fp);
     //cierro el archivo.
     closeFile(fp);
     //Cargo la estructura
-    showMenu(personas);
+    showMenu(libros);
     return 0;
 
 }
@@ -40,7 +40,7 @@ void showTitles(){
     printf("3. - Mostrar Personas \n");
     printf("4. - Salir \n");
 }
-void showMenu(Persona *personas){
+void showMenu(Libro *libros){
     int option = 0;
 
     do {
@@ -55,16 +55,16 @@ void showMenu(Persona *personas){
 
         switch (option) {
             case BUSCAR:
-                buscarPersona(personas);
+                buscarPersona(libros);
                 break;
             case ELIMINAR:
-                eliminarPersona(personas);
+                eliminarPersona(libros);
                 break;
             case MOSTRAR:
-                mostrarPersonas(personas);
+                mostrarPersonas(libros);
                 break;
             case SALIR:
-                salir(personas);
+                salir(libros);
                 break;
         }
     } while (option!=4);
@@ -76,11 +76,11 @@ void showMenu(Persona *personas){
 
 
 
-void salir(Persona *pPersonas) {
+void salir(Libro *lLibros) {
     printf("Gracias por usar el programa \n");
 }
 
-void buscarPersona(Persona *personas) {
+void buscarPersona(Libro *libros) {
     char name[50];
     printf("Ingrese el nombre o parte del nombre del titulo a buscar \n");
     scanf("%s", &name);
@@ -88,7 +88,7 @@ void buscarPersona(Persona *personas) {
     int i = 0;
     int encontre = 0;
     while (i<registryCount && encontre == 0){
-        char *nameConverted = toLowerCase(personas[i].titulo);
+        char *nameConverted = toLowerCase(libros[i].titulo);
         char *nameToLook = toLowerCase(name);
         char *ret = strstr(nameConverted, nameToLook);
         if(ret){
@@ -100,7 +100,7 @@ void buscarPersona(Persona *personas) {
     //verifico que sali por que encontre
     if (encontre == 1){
         printf("El libro Existe, estos son los datos \n");
-        printf("%s,%s. \n", personas[i].titulo, personas[i].autor);
+        printf("%s,%s. \n", libros[i].titulo, libros[i].autor);
     } else {
         printf("La libro no existe!");
     }
@@ -116,15 +116,15 @@ char *toLowerCase(char *name) {
     return converted;
 }
 
-void eliminarPersona(Persona *personas) {
+void eliminarPersona(Libro *libros) {
     char titu[100];
     int cont=0, i=0;
     printf("dame el titulo de la wea");//intento que recorra el array y el cont es para que me cuente la posicion en la que esta lo que eliminaremos
     scanf("%s",titu);
-    do{
+    while (libros[i].titulo!=titu){
         printf("%i\n",cont);
         cont++;
-        }while (personas[i].titulo!=titu);
+    }
 
     }
 
@@ -132,13 +132,12 @@ void eliminarPersona(Persona *personas) {
 
 
 
-void mostrarPersonas(Persona *personas) {
+void mostrarPersonas(Libro *libros) {
 
     //accedo a la cantidad de registro que lei
     for (int i = 0; i < registryCount; ++i) {
         //puedo solo imprimir su mail por ejemplo
-        printf("%s,%s. \n", personas[i].titulo, personas[i].autor);
+        printf("%s,%s. \n", libros[i].titulo, libros[i].autor);
     }
 
-}
 
