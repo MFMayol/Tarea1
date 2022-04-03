@@ -5,13 +5,14 @@
 #include <stdlib.h>
 #include "libros.h"
 #define MAXCHAR 1010
-enum OPTIONS {BUSCAR = 1, ELIMINAR = 2, MOSTRAR = 3, SALIR = 4};
+enum OPTIONS {BUSCAR = 1, ELIMINAR = 2, MOSTRAR = 3, EDITAR = 4, SALIR = 5};
 
 void mostrarPersonas(Libro *libros);
 void buscarPersona(Libro *libros);
 void eliminarPersona(Libro *libros);
 void salir(Libro *libros);
 void showMenu(Libro *libros);
+void editBook(Libro *libros);
 
 void salir(Libro *libros);
 
@@ -35,10 +36,11 @@ int main(int argc, char *argv[] ){
 
 void showTitles(){
     printf("Ingrese la opción \n");
-    printf("1. - Buscar Persona \n");
-    printf("2. - Borrar Persona \n");
-    printf("3. - Mostrar Personas \n");
-    printf("4. - Salir \n");
+    printf("1. - Buscar Libro \n");
+    printf("2. - Borrar Libro \n");
+    printf("3. - Mostrar libros \n");
+    printf("4. - Editar Libro \n");
+    printf("5. - Salir \n");
 }
 void showMenu(Libro *libros){
     int option = 0;
@@ -47,7 +49,7 @@ void showMenu(Libro *libros){
         showTitles();
         scanf("%d", &option);
         //esto hace que el menu vuelva a mostrarse hasta que me ingrese una opcion valida
-        while (option <= 0 || option >= 5) {
+        while (option <= 0 || option >= 6) {
             printf("Opcion Invalida! \n");
             showTitles();
             scanf("%d", &option);
@@ -66,8 +68,11 @@ void showMenu(Libro *libros){
             case SALIR:
                 salir(libros);
                 break;
+            case EDITAR:
+                editBook(libros);
+                break;
         }
-    } while (option!=4);
+    } while (option!=5);
 }
 
 
@@ -76,7 +81,7 @@ void showMenu(Libro *libros){
 
 
 
-void salir(Libro *libros) {
+void salir(Libro *pLibros) {
     printf("Gracias por usar el programa \n");
 }
 
@@ -121,12 +126,12 @@ void eliminarPersona(Libro *libros) {
     int cont=0, i=0;
     printf("dame el titulo de la wea");//intento que recorra el array y el cont es para que me cuente la posicion en la que esta lo que eliminaremos
     scanf("%s",titu);
-    do{
+    while (libros[i].titulo!=titu){
         printf("%i\n",cont);
         cont++;
-    }while (libros[i].titulo!=titu);
+    }
 
-}
+    }
 
 
 
@@ -139,6 +144,13 @@ void mostrarPersonas(Libro *libros) {
         //puedo solo imprimir su mail por ejemplo
         printf("%s,%s. \n", libros[i].titulo, libros[i].autor);
     }
-
 }
-
+void editBook(Libro *libros){
+    int i = 0;
+    while(i++ < 6)
+    {
+        libros[i].titulo = malloc(sizeof(char *));  //assigning memory to variable in each Struct
+        libros[i].titulo = strdup("Título");  //copying "name" to variable in each Struct
+        printf("C - %s\n", libros[i].titulo);  //printing out name variable in each Struct
+    }
+}
