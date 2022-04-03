@@ -8,6 +8,7 @@
 #define READ_ONLY "r"
 #define WRITE "w+"
 
+
 int registryCount = 0;
 
 FILE * openFile(char *filename){
@@ -20,7 +21,7 @@ void closeFile(FILE *fp){
     fclose(fp);
 }
 
-Libro* getLibros(FILE *fp) {
+Libro *getLibros(FILE *fp) {
     //genero un array dinamico de personas
     Libro *libros = (Libro*) malloc(5000*sizeof(Libro));;
 
@@ -29,50 +30,63 @@ Libro* getLibros(FILE *fp) {
     int cont = 0;
     //saco la primer linea
     fgets(row, MAXCHAR, fp);
-    while (feof(fp) != true){
-        //obtiene la linea siguiente
-        fgets(row, MAXCHAR, fp);
-        token = strtok(row, ",");
-        //print id first
-        Libro  *libro = (Libro *) malloc(sizeof(Libro));;
-        //convierto el id en entero
-        int anio = atoi(token);
-        //lo paso a la persona
-        libro->anio = anio;
+    while (!feof(fp)){
+        if (!feof(fp)){
+            //obtiene la linea siguiente
+            fgets(row, MAXCHAR, fp);
+            token = strtok(row, ",");
+            //print id first
+            Libro  *libro = (Libro *) malloc(sizeof(Libro));;
+            //convierto el id en entero
+            int anio = atoi(token);
+            int estante_numero = atoi(token);
+            int piso = atoi(token);
 
-        int estante = atoi(token);
-        libro->estante = estante;
+            //lo paso a la persona
 
-        int piso = atoi(token);
-        libro->piso = piso;
 
-        //obtengo el siguiente campo
-        token = strtok(NULL, ",");
-        //inicializo el string en la estructura acorde al tamaño que venga del archivo
-        libro->titulo = (char*)malloc( strlen(token) * sizeof(char));
-        //finalmente lo copio en el campo de persona
-        strcpy( libro->titulo, token);
+            libro->titulo = (char*)malloc( strlen(token) * sizeof(char));
+            strcpy( libro->titulo, token);
+            token = strtok(NULL, ",");
 
-        token = strtok(NULL, ",");
-        libro->autor = (char*)malloc( strlen(token) * sizeof(char));
-        strcpy( libro->autor, token);
+            libro->autor = (char*)malloc( strlen(token) * sizeof(char));
+            //finalmente lo copio en el campo de persona
+            strcpy( libro->autor, token);
+            token = strtok(NULL, ",");
 
-        token = strtok(NULL, ",");
-        libro->seccion = (char*)malloc( strlen(token) * sizeof(char));
-        strcpy( libro->seccion, token);
+            libro->anio = anio;
+            token = strtok(NULL, ",");
 
-        token = strtok(NULL, ",");
-        libro->edificio = (char*)malloc( strlen(token) * sizeof(char));
-        strcpy( libro->edificio, token);
+            libro->estante = estante_numero;
+            token = strtok(NULL, ",");
 
-        token = strtok(NULL, ",");
-        libro->sede = (char*)malloc( strlen(token) * sizeof(char));
-        strcpy( libro->sede, token);
+            libro->seccion = (char*)malloc( strlen(token) * sizeof(char));
+            //finalmente lo copio en el campo de persona
+            strcpy( libro->seccion, token);
+            token = strtok(NULL, ",");
 
-        libro[cont] = *libro;
-        cont++;
+            libro->piso = piso;
+            token = strtok(NULL, ",");
+
+            libro->edificio = (char*)malloc( strlen(token) * sizeof(char));
+            //finalmente lo copio en el campo de persona
+            strcpy( libro->edificio, token);
+            token = strtok(NULL, ",");
+
+            libro->sede = (char*)malloc( strlen(token) * sizeof(char));
+            //finalmente lo copio en el campo de persona
+            strcpy( libro->sede, token);
+            token = strtok(NULL, ",");
+
+
+            libros[cont] = *libro;
+            cont++;
+        }
     }
     //guardo la cantidad de registros que lei
     registryCount = cont;
     return libros;
 }
+
+
+
