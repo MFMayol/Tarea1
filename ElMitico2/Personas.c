@@ -1,6 +1,3 @@
-//
-// Created by Justo Vargas on 15-03-22.
-//
 #include <stdio.h>
 #include<string.h>
 #include<stdbool.h>
@@ -24,9 +21,9 @@ void closeFile(FILE *fp){
     fclose(fp);
 }
 
-Persona *getPersonas(FILE *fp) {
+Libro *getLibros(FILE *fp) {
     //genero un array dinamico de personas
-    Persona *personas = (Persona*) malloc(5000*sizeof(Persona));;
+    Libro *libros = (Libro*) malloc(5000*sizeof(Libro));;
 
     char row[MAXCHAR];
     char *token;
@@ -39,7 +36,7 @@ Persona *getPersonas(FILE *fp) {
             fgets(row, MAXCHAR, fp);
             token = strtok(row, ",");
             //print id first
-            Persona  *persona = (Persona *) malloc(sizeof(Persona));;
+            Libro  *libro = (Libro *) malloc(sizeof(Libro));;
             //convierto el id en entero
             int anio = atoi(token);
             int estante_numero = atoi(token);
@@ -48,47 +45,47 @@ Persona *getPersonas(FILE *fp) {
             //lo paso a la persona
 
 
-            persona->titulo = (char*)malloc( strlen(token) * sizeof(char));
-            strcpy( persona->titulo, token);
+            libro->titulo = (char*)malloc( strlen(token) * sizeof(char));
+            strcpy( libro->titulo, token);
             token = strtok(NULL, ",");
 
-            persona->autor = (char*)malloc( strlen(token) * sizeof(char));
+            libro->autor = (char*)malloc( strlen(token) * sizeof(char));
             //finalmente lo copio en el campo de persona
-            strcpy( persona->autor, token);
+            strcpy( libro->autor, token);
             token = strtok(NULL, ",");
 
-            persona->anio = anio;
+            libro->anio = anio;
             token = strtok(NULL, ",");
 
-            persona->estante = estante_numero;
+            libro->estante = estante_numero;
             token = strtok(NULL, ",");
 
-            persona->seccion = (char*)malloc( strlen(token) * sizeof(char));
+            libro->seccion = (char*)malloc( strlen(token) * sizeof(char));
             //finalmente lo copio en el campo de persona
-            strcpy( persona->seccion, token);
+            strcpy( libro->seccion, token);
             token = strtok(NULL, ",");
 
-            persona->piso = piso;
+            libro->piso = piso;
             token = strtok(NULL, ",");
 
-            persona->edificio = (char*)malloc( strlen(token) * sizeof(char));
+            libro->edificio = (char*)malloc( strlen(token) * sizeof(char));
             //finalmente lo copio en el campo de persona
-            strcpy( persona->edificio, token);
+            strcpy( libro->edificio, token);
             token = strtok(NULL, ",");
 
-            persona->sede = (char*)malloc( strlen(token) * sizeof(char));
+            libro->sede = (char*)malloc( strlen(token) * sizeof(char));
             //finalmente lo copio en el campo de persona
-            strcpy( persona->sede, token);
+            strcpy( libro->sede, token);
             token = strtok(NULL, ",");
 
 
-            personas[cont] = *persona;
+            libros[cont] = *libro;
             cont++;
         }
     }
     //guardo la cantidad de registros que lei
     registryCount = cont;
-    return personas;
+    return libros;
 }
 
 
