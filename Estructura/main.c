@@ -9,8 +9,11 @@
 #define READ_ONLY "r"
 #define WRITE_ONLY "w"
 
+enum OPTION {titulo, autor, año, estante, sección, piso, edificio, sede};
+
 void searchBook(FILE *fp, char **);
 void deleteRow(FILE *fp, FILE *fp2);  // va a agregar una columna con unos al final de cada fila para identificar que libros hemos borrado
+void editBook(FILE *fp);
 
 
 FILE * openingFile(char *filename){
@@ -49,6 +52,9 @@ int main(int argc, char *argv[] ) {
         if (option == 2) {
             deleteRow(fp, fp2);
         }
+        if (option == 3) {
+            editBook(fp);
+        }
         if (option == 4) {
             searchBook(fp, first_row);
         }
@@ -61,6 +67,62 @@ int main(int argc, char *argv[] ) {
     return 0;
 
 }
+
+void editBook(FILE *fp) {
+    char title[LENGHT];
+    char parameter[LENGHT];
+    char *row = malloc(sizeof(char) * MAXCHAR);
+    char *token;
+
+    bool gate = false;
+
+    printf("\nIngresa el título del libro que quieres editar: ");
+    fpurge(stdin);  // para limpiar el buffer de entrada stdin
+    fgets(title, LENGHT, stdin);
+    strtok(title, "\n");
+
+    while (feof(fp) != true) {
+
+        int arr[8];
+        int i;
+
+        fgets(row, MAXCHAR, fp);
+        for (i = 0; i < 8; i++) {
+            token = strtok(row, ",");
+            row = strtok(NULL, "\n");
+            if (i == 7) {
+                strtok(token, "\n");
+            }
+            //arr[i]  = token;
+        }
+
+
+        if (strcmp(token, title) == 0) {
+            printf("Que parámetro quieres cambiar (ejemplo: edificio): ");
+            fpurge(stdin);
+            fgets(parameter, LENGHT, stdin);
+            strtok(parameter, "\n");
+        //    enum OPTION option;
+        //    option = parameter;
+        }
+
+        // revisar si el parámetro es igual a cada parámetro
+
+
+
+        if (strcmp(token, parameter) != 0) {
+
+        }
+
+
+
+
+
+
+    }
+    free(row);
+}
+
 void deleteRow(FILE *fp, FILE *fp2) {
     char title[LENGHT];
     char *row = malloc(sizeof(char) * MAXCHAR);
@@ -131,7 +193,3 @@ void searchBook(FILE *fp, char **first_row) {
         printf("Lo sentimos, su libro no se ha encontrado.\n");
     }
 }
-
-
-
-
