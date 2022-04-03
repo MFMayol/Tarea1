@@ -1,7 +1,4 @@
-//
-// Created by Justo Vargas on 15-03-22.
-//
-struct Personas {
+struct Libros {
     char  *titulo;
     char  *autor;
     int  anio;
@@ -12,11 +9,11 @@ struct Personas {
     char *sede;
 } ;
 
-typedef struct Personas Persona;
+typedef struct Libros Libro;
 
 extern int registryCount;
 
-Persona* getPersonas(FILE *fp);
+Libro* getLibros(FILE *fp);
 
 FILE * openFile(char *filename);
 void closeFile(FILE *pFile);
