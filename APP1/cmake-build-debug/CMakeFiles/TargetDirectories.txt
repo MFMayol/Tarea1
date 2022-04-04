@@ -1,0 +1,3 @@
+/Users/josedelabarra/Desktop/carpeta sin título/Tarea1/Estructura/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/josedelabarra/Desktop/carpeta sin título/Tarea1/Estructura/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/josedelabarra/Desktop/carpeta sin título/Tarea1/Estructura/cmake-build-debug/CMakeFiles/Structs_Files.dir
